@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\Moneymanager.Services.TransactionAPI.props" />
-</Project>
