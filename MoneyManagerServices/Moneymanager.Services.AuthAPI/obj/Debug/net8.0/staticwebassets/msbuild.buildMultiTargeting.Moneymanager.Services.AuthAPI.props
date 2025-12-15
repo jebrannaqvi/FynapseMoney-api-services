@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Moneymanager.Services.AuthAPI.props" />
+</Project>

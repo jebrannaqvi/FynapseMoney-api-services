@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "FYZqVmY3VJ1JEnp6MUK80IPJc53SI1c2qMURJPUaN3E=",
+  "Source": "Moneymanager.Services.AuthAPI",
+  "BasePath": "_content/Moneymanager.Services.AuthAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

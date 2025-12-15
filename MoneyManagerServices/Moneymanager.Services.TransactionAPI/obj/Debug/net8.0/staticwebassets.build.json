@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "8EaQNiJ+IzRlcMOWHms8HqGLz4jhsNl09ZUS/eqld08=",
+  "Source": "Moneymanager.Services.TransactionAPI",
+  "BasePath": "_content/Moneymanager.Services.TransactionAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnd", "FrontEnd", "{0A526B9D-25EF-42D8-8587-D7C76DD94E3C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{936C8D49-382B-4CF9-B82A-A03883D30FE0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrations", "Integrations", "{060D66EB-5B22-4A64-84A5-C8A982136394}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{259D8D4F-727C-4CBE-9CC1-A3BAE148C0C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moneymanager.Services.TransactionAPI", "Moneymanager.Services.TransactionAPI\Moneymanager.Services.TransactionAPI.csproj", "{3D60B7B0-7C2A-4F61-B326-2107039F07DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moneymanager.Services.AuthAPI", "Moneymanager.Services.AuthAPI\Moneymanager.Services.AuthAPI.csproj", "{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D60B7B0-7C2A-4F61-B326-2107039F07DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D60B7B0-7C2A-4F61-B326-2107039F07DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D60B7B0-7C2A-4F61-B326-2107039F07DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D60B7B0-7C2A-4F61-B326-2107039F07DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3D60B7B0-7C2A-4F61-B326-2107039F07DC} = {259D8D4F-727C-4CBE-9CC1-A3BAE148C0C5}
+		{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F} = {259D8D4F-727C-4CBE-9CC1-A3BAE148C0C5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC7C8A56-9BEF-4059-8CFC-E48E0E9E2372}
+	EndGlobalSection
+EndGlobal
