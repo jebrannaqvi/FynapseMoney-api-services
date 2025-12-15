@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Moneymanager.Services.BudgetAPI.Data;
 using Moneymanager.Services.BudgetAPI.Models;
 using Moneymanager.Services.BudgetAPI.Models.DTO;
+using Moneymanager.Services.BudgetAPI.Services.IServices;
 
 namespace Moneymanager.Services.BudgetAPI.Controllers
 {
@@ -16,22 +17,29 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
         private readonly AppDBContext _dbContext;
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
+        private IAccountTransactionService _accountTransactionService;
 
-        public BudgetAPIController(AppDBContext dbContext, IMapper mapper)
+        public BudgetAPIController(AppDBContext dbContext, IMapper mapper, IAccountTransactionService accountTransactionService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _responseDTO = new ResponseDTO();
+            _accountTransactionService = accountTransactionService;
 
 
         }
 
         [HttpGet]
-        public ResponseDTO Get()
+        public async Task<ResponseDTO> Get()
         {
             try
             {
                 var budgets = _dbContext.Budget.ToList();
+                foreach (var budget in budgets)
+                {
+                    budget.Subcategory = await _accountTransactionService.GetSubcategoryById(budget.SubcategoryId);
+                }
+
                 _responseDTO.Result = _mapper.Map<IEnumerable<BudgetDTO>>(budgets);
             }
             catch (Exception ex)
@@ -46,11 +54,16 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public ResponseDTO Get(int id)
+        public async Task<ResponseDTO> Get(int id)
         {
             try
             {
-                var budget = _dbContext.Budget.FirstOrDefaultAsync(at => at.BudgetId == id);
+                var budget = _dbContext.Budget.FirstOrDefault(at => at.BudgetId == id);
+                if (budget != null)
+                {
+                    budget.Subcategory = await _accountTransactionService.GetSubcategoryById(budget.SubcategoryId);
+                }
+                
                 _responseDTO.Result  = _mapper.Map<BudgetDTO>(budget);
             }
             catch (Exception ex)
