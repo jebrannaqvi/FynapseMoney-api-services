@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moneymanager.Services.Trans
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moneymanager.Services.AuthAPI", "Moneymanager.Services.AuthAPI\Moneymanager.Services.AuthAPI.csproj", "{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moneymanager.Services.BudgetAPI", "BudgetAPI\Moneymanager.Services.BudgetAPI.csproj", "{E0A1763B-1D46-49F6-92A6-9EABD625ACE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moneymanager.Services.BudgetAPI", "Moneymanager.Services.BudgetAPI\Moneymanager.Services.BudgetAPI.csproj", "{E0A1763B-1D46-49F6-92A6-9EABD625ACE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moneymanager.Services.RecommendationAPI", "Moneymanager.Services.RecommendationAPI\Moneymanager.Services.RecommendationAPI.csproj", "{8E2E79D9-6E85-4412-B4DC-8F6ED28CF23F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{E0A1763B-1D46-49F6-92A6-9EABD625ACE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0A1763B-1D46-49F6-92A6-9EABD625ACE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0A1763B-1D46-49F6-92A6-9EABD625ACE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E2E79D9-6E85-4412-B4DC-8F6ED28CF23F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E2E79D9-6E85-4412-B4DC-8F6ED28CF23F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E2E79D9-6E85-4412-B4DC-8F6ED28CF23F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E2E79D9-6E85-4412-B4DC-8F6ED28CF23F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +48,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3D60B7B0-7C2A-4F61-B326-2107039F07DC} = {259D8D4F-727C-4CBE-9CC1-A3BAE148C0C5}
 		{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F} = {259D8D4F-727C-4CBE-9CC1-A3BAE148C0C5}
+		{E0A1763B-1D46-49F6-92A6-9EABD625ACE0} = {259D8D4F-727C-4CBE-9CC1-A3BAE148C0C5}
+		{8E2E79D9-6E85-4412-B4DC-8F6ED28CF23F} = {259D8D4F-727C-4CBE-9CC1-A3BAE148C0C5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC7C8A56-9BEF-4059-8CFC-E48E0E9E2372}

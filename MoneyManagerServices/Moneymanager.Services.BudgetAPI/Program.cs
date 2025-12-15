@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Moneymanager.Services.BudgetAPI;
 using Moneymanager.Services.BudgetAPI.Data;
+using Moneymanager.Services.BudgetAPI.Services;
+using Moneymanager.Services.BudgetAPI.Services.IServices;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,14 @@ builder.Services.AddDbContext<AppDBContext>(options =>
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<IAccountTransactionService, AccountTransactionService>();
+
+builder.Services.AddHttpClient("Category", c =>
+{
+    c.BaseAddress = new Uri(builder.Configuration["ServiceUrls:CategoryAPI"]);
+});
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
