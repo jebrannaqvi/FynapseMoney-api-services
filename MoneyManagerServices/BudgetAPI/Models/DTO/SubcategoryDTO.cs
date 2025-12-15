@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Moneymanager.Services.TransactionAPI.Models.DTO
+namespace Moneymanager.Services.BudgetAPI.Models.DTO
 {
     public class SubcategoryDTO
     {
