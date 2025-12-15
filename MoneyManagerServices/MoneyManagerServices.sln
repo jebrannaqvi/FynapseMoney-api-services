@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{25
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moneymanager.Services.TransactionAPI", "Moneymanager.Services.TransactionAPI\Moneymanager.Services.TransactionAPI.csproj", "{3D60B7B0-7C2A-4F61-B326-2107039F07DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moneymanager.Services.AuthAPI", "Moneymanager.Services.AuthAPI\Moneymanager.Services.AuthAPI.csproj", "{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moneymanager.Services.AuthAPI", "Moneymanager.Services.AuthAPI\Moneymanager.Services.AuthAPI.csproj", "{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moneymanager.Services.BudgetAPI", "BudgetAPI\Moneymanager.Services.BudgetAPI.csproj", "{E0A1763B-1D46-49F6-92A6-9EABD625ACE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBCDE075-CDFC-4E3B-801D-B8A80FE0858F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0A1763B-1D46-49F6-92A6-9EABD625ACE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0A1763B-1D46-49F6-92A6-9EABD625ACE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0A1763B-1D46-49F6-92A6-9EABD625ACE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0A1763B-1D46-49F6-92A6-9EABD625ACE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
