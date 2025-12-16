@@ -3,6 +3,8 @@
     public class AccountTransactionDTO
     {
         public int TransactionID { get; set; }
+
+        public int UserID { get; set; }
         public int BankAccountID { get; set; }
         public DateTime TransactionDate { get; set; }
         public String? Description { get; set; }

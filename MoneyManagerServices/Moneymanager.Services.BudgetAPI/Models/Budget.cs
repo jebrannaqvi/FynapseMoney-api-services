@@ -8,6 +8,8 @@ namespace Moneymanager.Services.BudgetAPI.Models
     {
         [Key]
         public int BudgetId { get; set; }
+        [Required]
+        public int UserId { get; set; }
         public int SubcategoryId { get; set; }
         public double Amount { get; set; }
         

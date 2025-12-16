@@ -13,8 +13,8 @@ namespace Moneymanager.Services.TransactionAPI.Models
         internal static TransaationType[] GetPreconfiguredTransactionTypes()
         {
             return new TransaationType[] {
-                new TransaationType() { TransactionTypeID = 1, TransactionTypeName = "Credit", CreatedDate = DateTime.Now },
-                new TransaationType() { TransactionTypeID = 2, TransactionTypeName = "Debit", CreatedDate = DateTime.Now }
+                new TransaationType() { TransactionTypeID = 1, TransactionTypeName = "Credit", CreatedDate = DateTime.Today },
+                new TransaationType() { TransactionTypeID = 2, TransactionTypeName = "Debit", CreatedDate = DateTime.Today }
                 };
         }
     }

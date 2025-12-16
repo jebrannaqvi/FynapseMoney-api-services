@@ -8,6 +8,8 @@ namespace Moneymanager.Services.TransactionAPI.Models
         [Key]
         public int TransactionID { get; set; }
         [Required]
+        public int UserID { get; set; }
+        [Required]
         public int BankAccountID { get; set; }
         [Required] 
         public DateTime TransactionDate { get; set; }

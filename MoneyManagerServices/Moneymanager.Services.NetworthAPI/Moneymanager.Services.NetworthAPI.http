@@ -1,0 +1,6 @@
+@Moneymanager.Services.NetworthAPI_HostAddress = http://localhost:5209
+
+GET {{Moneymanager.Services.NetworthAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
