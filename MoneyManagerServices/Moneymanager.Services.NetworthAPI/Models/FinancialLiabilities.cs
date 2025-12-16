@@ -4,12 +4,12 @@ using static Moneymanager.Services.NetworthAPI.Constants.Constants;
 
 namespace Moneymanager.Services.NetworthAPI.Models
 {
-    public class FinancialLiability
+    public class FinancialLiabilities
     {
         [Key]
         public int FinancialId { get; set; }
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         [Required]
         public string LiabilityName { get; set; }
         [Required]

@@ -7,7 +7,7 @@ namespace Moneymanager.Services.BudgetAPI.Models.DTO
     public class BudgetDTO
     {
         public int BudgetId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public int SubcategoryId { get; set; }
         public double Amount { get; set; }
         public SubcategoryDTO? Subcategory { get; set; }

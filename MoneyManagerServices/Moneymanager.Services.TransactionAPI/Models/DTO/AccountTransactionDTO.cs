@@ -1,11 +1,13 @@
-﻿namespace Moneymanager.Services.TransactionAPI.Models.DTO
+﻿using System.Text.Json.Serialization;
+
+namespace Moneymanager.Services.TransactionAPI.Models.DTO
 {
     public class AccountTransactionDTO
     {
         public int TransactionID { get; set; }
 
-        public int UserID { get; set; }
-        public int BankAccountID { get; set; }
+        public string UserID { get; set; }
+        public int AccountID { get; set; }
         public DateTime TransactionDate { get; set; }
         public String? Description { get; set; }
         public double Amount { get; set; }

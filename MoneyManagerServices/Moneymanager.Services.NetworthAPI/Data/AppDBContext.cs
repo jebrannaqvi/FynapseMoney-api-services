@@ -13,7 +13,7 @@ namespace Moneymanager.Services.NetworthAPI.Data
         }
 
         public DbSet<FinancialAsset> Assets { get; set; }
-        public DbSet<FinancialLiability> Liabilities { get; set; }
+        public DbSet<FinancialLiabilities> Liabilities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

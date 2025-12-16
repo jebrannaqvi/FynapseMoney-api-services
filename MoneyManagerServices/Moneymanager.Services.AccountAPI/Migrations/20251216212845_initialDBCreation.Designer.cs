@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Moneymanager.Services.TransactionAPI.Data;
+using Moneymanager.Services.AccountAPI.Data;
 
 #nullable disable
 
-namespace Moneymanager.Services.TransactionAPI.Migrations
+namespace Moneymanager.Services.AccountAPI.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20251206004508_AddAccountTransactionToDB")]
-    partial class AddAccountTransactionToDB
+    [Migration("20251216212845_initialDBCreation")]
+    partial class initialDBCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,41 +25,43 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Moneymanager.Services.TransactionAPI.Models.AccountTransaction", b =>
+            modelBuilder.Entity("Moneymanager.Services.AccountAPI.Models.Accounts", b =>
                 {
-                    b.Property<int>("TransactionID")
+                    b.Property<int>("AccountID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountID"));
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<string>("AccountNumber")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("BankAccountID")
+                    b.Property<int?>("AccountType")
                         .HasColumnType("int");
 
-                    b.Property<string>("Category")
+                    b.Property<int?>("AverageMonthlyTransactions")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BankName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CategoryType")
+                    b.Property<double>("CurrentBalance")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Nickname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("StartingBalance")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("AccountID");
 
-                    b.Property<DateTime>("TransactionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TransactionID");
-
-                    b.ToTable("AccountTransactions");
+                    b.ToTable("Accounts");
                 });
 #pragma warning restore 612, 618
         }

@@ -52,7 +52,7 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
 
         [HttpGet]
         [Route("{userId}")]
-        public ResponseDTO Get(int userId)
+        public ResponseDTO Get(string userId)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
         {
             try
             {
-                FinancialLiability financialLiability = _mapper.Map<FinancialLiability>(financialLiabilityDTO);
+                FinancialLiabilities financialLiability = _mapper.Map<FinancialLiabilities>(financialLiabilityDTO);
                 _dbContext.Liabilities.Add(financialLiability);
                 _dbContext.SaveChanges();
 
@@ -154,11 +154,11 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
 
         [HttpPut]
         [Route("financialliability")]
-        public ResponseDTO put([FromBody] FinancialLiability financialLiabilityDTO)
+        public ResponseDTO put([FromBody] FinancialLiabilities financialLiabilityDTO)
         {
             try
             {
-                FinancialLiability liability = _mapper.Map<FinancialLiability>(financialLiabilityDTO);
+                FinancialLiabilities liability = _mapper.Map<FinancialLiabilities>(financialLiabilityDTO);
                 _dbContext.Liabilities.Update(liability);
                 _dbContext.SaveChanges();
 

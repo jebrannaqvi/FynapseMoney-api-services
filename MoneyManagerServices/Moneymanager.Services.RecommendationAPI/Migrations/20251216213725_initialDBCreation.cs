@@ -2,26 +2,26 @@
 
 #nullable disable
 
-namespace Moneymanager.Services.BudgetAPI.Migrations
+namespace Moneymanager.Services.RecommendationAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class initialTableCreation : Migration
+    public partial class initialDBCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Budget",
+                name: "Recommendations",
                 columns: table => new
                 {
-                    BudgetId = table.Column<int>(type: "int", nullable: false)
+                    RecommendationId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SubcategoryId = table.Column<int>(type: "int", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RecommendationValue = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Budget", x => x.BudgetId);
+                    table.PrimaryKey("PK_Recommendations", x => x.RecommendationId);
                 });
         }
 
@@ -29,7 +29,7 @@ namespace Moneymanager.Services.BudgetAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Budget");
+                name: "Recommendations");
         }
     }
 }

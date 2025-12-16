@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moneymanager.Services.Recom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moneymanager.Services.NetworthAPI", "Moneymanager.Services.NetworthAPI\Moneymanager.Services.NetworthAPI.csproj", "{1F9CBDDE-88A2-4BBF-A0E4-9DDF39D64CEE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moneymanager.Services.AccountAPI", "Moneymanager.Services.AccountAPI\Moneymanager.Services.AccountAPI.csproj", "{273E0995-72D1-455A-8583-CD66C1C7FA47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{1F9CBDDE-88A2-4BBF-A0E4-9DDF39D64CEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F9CBDDE-88A2-4BBF-A0E4-9DDF39D64CEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F9CBDDE-88A2-4BBF-A0E4-9DDF39D64CEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{273E0995-72D1-455A-8583-CD66C1C7FA47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{273E0995-72D1-455A-8583-CD66C1C7FA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{273E0995-72D1-455A-8583-CD66C1C7FA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{273E0995-72D1-455A-8583-CD66C1C7FA47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{E0A1763B-1D46-49F6-92A6-9EABD625ACE0} = {259D8D4F-727C-4CBE-9CC1-A3BAE148C0C5}
 		{8E2E79D9-6E85-4412-B4DC-8F6ED28CF23F} = {259D8D4F-727C-4CBE-9CC1-A3BAE148C0C5}
 		{1F9CBDDE-88A2-4BBF-A0E4-9DDF39D64CEE} = {259D8D4F-727C-4CBE-9CC1-A3BAE148C0C5}
+		{273E0995-72D1-455A-8583-CD66C1C7FA47} = {259D8D4F-727C-4CBE-9CC1-A3BAE148C0C5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DC7C8A56-9BEF-4059-8CFC-E48E0E9E2372}

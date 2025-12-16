@@ -43,15 +43,16 @@ namespace Moneymanager.Services.NetworthAPI.Migrations
                     b.Property<double?>("GrowthRate")
                         .HasColumnType("float");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FinancialAssetId");
 
                     b.ToTable("Assets");
                 });
 
-            modelBuilder.Entity("Moneymanager.Services.NetworthAPI.Models.FinancialLiability", b =>
+            modelBuilder.Entity("Moneymanager.Services.NetworthAPI.Models.FinancialLiabilities", b =>
                 {
                     b.Property<int>("FinancialId")
                         .ValueGeneratedOnAdd()
@@ -72,8 +73,9 @@ namespace Moneymanager.Services.NetworthAPI.Migrations
                     b.Property<int>("LiabilityType")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FinancialId");
 

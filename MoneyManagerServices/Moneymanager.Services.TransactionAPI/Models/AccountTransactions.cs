@@ -1,16 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Moneymanager.Services.TransactionAPI.Models
 {
-    public class AccountTransaction
+    public class AccountTransactions
     {
         [Key]
         public int TransactionID { get; set; }
         [Required]
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         [Required]
-        public int BankAccountID { get; set; }
+        public int AccountID { get; set; }
         [Required] 
         public DateTime TransactionDate { get; set; }
         public String? Description { get; set; }

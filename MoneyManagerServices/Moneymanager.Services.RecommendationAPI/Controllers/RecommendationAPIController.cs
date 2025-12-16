@@ -31,7 +31,7 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
         {
             try
             {
-                var recommendation = _dbContext.Recommendation.ToList();
+                var recommendation = _dbContext.Recommendations.ToList();
                 _responseDTO.Result = _mapper.Map<IEnumerable<RecommendationDTO>>(recommendation);
             }
             catch (Exception ex)
@@ -50,7 +50,7 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
         {
             try
             {
-                var recommendation = _dbContext.Recommendation.FirstOrDefault(at => at.RecommendationId == id);
+                var recommendation = _dbContext.Recommendations.FirstOrDefault(at => at.RecommendationId == id);
                 _responseDTO.Result  = _mapper.Map<RecommendationDTO>(recommendation);
             }
             catch (Exception ex)
@@ -71,8 +71,8 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
         {
             try
             {
-                Recommendation recommendation = _mapper.Map<Recommendation>(recdto);
-                _dbContext.Recommendation.Add(recommendation);
+                Recommendations recommendation = _mapper.Map<Recommendations>(recdto);
+                _dbContext.Recommendations.Add(recommendation);
                 _dbContext.SaveChanges();
 
                 _responseDTO.Result = _mapper.Map<RecommendationDTO>(recommendation);
@@ -94,8 +94,8 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
         {
             try
             {
-                Recommendation recommendation = _mapper.Map<Recommendation>(recommendationDTO);
-                _dbContext.Recommendation.Update(recommendation);
+                Recommendations recommendation = _mapper.Map<Recommendations>(recommendationDTO);
+                _dbContext.Recommendations.Update(recommendation);
                 _dbContext.SaveChanges();
 
                 _responseDTO.Result = _mapper.Map<RecommendationDTO>(recommendation);

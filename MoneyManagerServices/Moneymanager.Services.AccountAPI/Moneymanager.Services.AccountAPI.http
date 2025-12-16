@@ -1,0 +1,6 @@
+@Moneymanager.Services.AccountAPI_HostAddress = http://localhost:5010
+
+GET {{Moneymanager.Services.AccountAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

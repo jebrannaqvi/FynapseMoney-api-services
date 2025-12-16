@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Moneymanager.Services.TransactionAPI;
-using Moneymanager.Services.TransactionAPI.Data;
+using Moneymanager.Services.AccountAPI;
+using Moneymanager.Services.AccountAPI.Data;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -24,6 +24,7 @@ builder.Services.AddControllers()
     {
         opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -56,7 +57,7 @@ builder.Services.AddSwaggerGen(option =>
 var secret = builder.Configuration.GetValue<string>("ApiSettings:Secret");
 var issuer = builder.Configuration.GetValue<string>("ApiSettings:Issuer");
 var audience = builder.Configuration.GetValue<string>("ApiSettings:Audience");
- 
+
 var key = Encoding.ASCII.GetBytes(secret);
 
 builder.Services.AddAuthentication(x =>

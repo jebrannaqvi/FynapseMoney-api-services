@@ -15,7 +15,7 @@ namespace Moneymanager.Services.TransactionAPI
             var mappingConfig = new MapperConfiguration(cfg =>
             {
                 // Add your mappings here
-                cfg.CreateMap<AccountTransactionDTO, AccountTransaction>().ReverseMap();
+                cfg.CreateMap<AccountTransactionDTO, AccountTransactions>().ReverseMap();
                 cfg.CreateMap<Subcategory, SubcategoryDTO>().ReverseMap();
                 cfg.CreateMap<CategoryDTO, Category>().ReverseMap();
                 cfg.CreateMap<TransactionTypeDTO, TransaationType>().ReverseMap();

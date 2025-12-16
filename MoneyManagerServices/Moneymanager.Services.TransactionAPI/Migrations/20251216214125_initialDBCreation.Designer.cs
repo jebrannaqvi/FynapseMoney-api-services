@@ -12,8 +12,8 @@ using Moneymanager.Services.TransactionAPI.Data;
 namespace Moneymanager.Services.TransactionAPI.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20251216021621_AddUserID")]
-    partial class AddUserID
+    [Migration("20251216214125_initialDBCreation")]
+    partial class initialDBCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Moneymanager.Services.TransactionAPI.Models.AccountTransaction", b =>
+            modelBuilder.Entity("Moneymanager.Services.TransactionAPI.Models.AccountTransactions", b =>
                 {
                     b.Property<int>("TransactionID")
                         .ValueGeneratedOnAdd()
@@ -33,11 +33,11 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionID"));
 
+                    b.Property<int>("AccountID")
+                        .HasColumnType("int");
+
                     b.Property<double>("Amount")
                         .HasColumnType("float");
-
-                    b.Property<int>("BankAccountID")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -51,8 +51,9 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                     b.Property<int>("TransactionTypeID")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TransactionID");
 
@@ -87,79 +88,79 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                         {
                             CategoryID = 1,
                             CategoryName = "Income",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4177)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryID = 2,
                             CategoryName = "Auto & Transport",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4180)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryID = 3,
                             CategoryName = "Housing",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4182)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryID = 4,
                             CategoryName = "Bills & Utilities",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4184)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryID = 5,
                             CategoryName = "Food & Dining",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4186)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryID = 6,
                             CategoryName = "Shopping",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4188)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryID = 7,
                             CategoryName = "Gifts & Donations",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4190)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryID = 8,
                             CategoryName = "Financial",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4191)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryID = 9,
                             CategoryName = "Children",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4193)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryID = 10,
                             CategoryName = "Health & Fitness",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4195)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryID = 11,
                             CategoryName = "Travel & Fun",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4197)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryID = 12,
                             CategoryName = "Business Expenses",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4199)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryID = 13,
                             CategoryName = "Other",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4201)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
 
@@ -187,25 +188,25 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                         {
                             CategoryTypeID = 1,
                             CategoryTypeName = "Income",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4014)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryTypeID = 2,
                             CategoryTypeName = "Variable",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4060)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryTypeID = 3,
                             CategoryTypeName = "Fixed",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4062)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             CategoryTypeID = 4,
                             CategoryTypeName = "Other",
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4064)
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
 
@@ -244,7 +245,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 1,
                             CategoryId = 1,
                             CategoryTypeId = 1,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4237),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Freelance"
                         },
                         new
@@ -252,7 +253,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 2,
                             CategoryId = 1,
                             CategoryTypeId = 1,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4239),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Rental Income"
                         },
                         new
@@ -260,7 +261,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 3,
                             CategoryId = 1,
                             CategoryTypeId = 1,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4242),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Investment Income"
                         },
                         new
@@ -268,7 +269,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 4,
                             CategoryId = 1,
                             CategoryTypeId = 1,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4244),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Bonus"
                         },
                         new
@@ -276,7 +277,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 5,
                             CategoryId = 1,
                             CategoryTypeId = 1,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4246),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Interest"
                         },
                         new
@@ -284,7 +285,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 6,
                             CategoryId = 1,
                             CategoryTypeId = 1,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4248),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Other Income"
                         },
                         new
@@ -292,7 +293,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 7,
                             CategoryId = 2,
                             CategoryTypeId = 3,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4250),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Auto Payment"
                         },
                         new
@@ -300,7 +301,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 8,
                             CategoryId = 2,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4252),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Public Transportation"
                         },
                         new
@@ -308,7 +309,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 9,
                             CategoryId = 2,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4255),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Fuel & Gasoline"
                         },
                         new
@@ -316,7 +317,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 10,
                             CategoryId = 2,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4257),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Ridesharing & Taxis"
                         },
                         new
@@ -324,7 +325,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 11,
                             CategoryId = 2,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4259),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Vehicle Maintenance & Repairs"
                         },
                         new
@@ -332,7 +333,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 12,
                             CategoryId = 2,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4261),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Parking & Tolls"
                         },
                         new
@@ -340,7 +341,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 13,
                             CategoryId = 3,
                             CategoryTypeId = 3,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4263),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Mortgage"
                         },
                         new
@@ -348,7 +349,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 14,
                             CategoryId = 3,
                             CategoryTypeId = 3,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4265),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Rent"
                         },
                         new
@@ -356,7 +357,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 15,
                             CategoryId = 3,
                             CategoryTypeId = 3,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4268),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Property Tax"
                         },
                         new
@@ -364,7 +365,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 16,
                             CategoryId = 3,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4270),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Home Improvements"
                         },
                         new
@@ -372,7 +373,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 17,
                             CategoryId = 3,
                             CategoryTypeId = 3,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4272),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Home Security"
                         },
                         new
@@ -380,7 +381,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 18,
                             CategoryId = 4,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4274),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Home Gas"
                         },
                         new
@@ -388,7 +389,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 19,
                             CategoryId = 4,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4276),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Home Electricity"
                         },
                         new
@@ -396,7 +397,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 20,
                             CategoryId = 4,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4278),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Internet & Streaming"
                         },
                         new
@@ -404,7 +405,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 21,
                             CategoryId = 4,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4280),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Water"
                         },
                         new
@@ -412,7 +413,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 22,
                             CategoryId = 4,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4282),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Home Rental Equipment"
                         },
                         new
@@ -420,7 +421,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 23,
                             CategoryId = 4,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4284),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Phone"
                         },
                         new
@@ -428,7 +429,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 24,
                             CategoryId = 5,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4286),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Groceries"
                         },
                         new
@@ -436,7 +437,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 25,
                             CategoryId = 5,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4291),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Coffee Shops"
                         },
                         new
@@ -444,7 +445,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 26,
                             CategoryId = 5,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4293),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Fast Food"
                         },
                         new
@@ -452,7 +453,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 27,
                             CategoryId = 5,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4295),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Restaurants"
                         },
                         new
@@ -460,7 +461,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 28,
                             CategoryId = 6,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4297),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Shopping"
                         },
                         new
@@ -468,7 +469,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 29,
                             CategoryId = 6,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4299),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Clothing & Accessories"
                         },
                         new
@@ -476,7 +477,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 30,
                             CategoryId = 6,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4301),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Furniture & Home Decor"
                         },
                         new
@@ -484,7 +485,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 31,
                             CategoryId = 6,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4303),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Appliances & Electronics"
                         },
                         new
@@ -492,7 +493,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 32,
                             CategoryId = 7,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4305),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Gifts"
                         },
                         new
@@ -500,7 +501,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 33,
                             CategoryId = 7,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4307),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Charity"
                         },
                         new
@@ -508,7 +509,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 34,
                             CategoryId = 8,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4309),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Student Loans & Repayments"
                         },
                         new
@@ -516,7 +517,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 35,
                             CategoryId = 8,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4311),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Financial Fees"
                         },
                         new
@@ -524,7 +525,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 36,
                             CategoryId = 8,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4313),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Taxes"
                         },
                         new
@@ -532,7 +533,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 37,
                             CategoryId = 8,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4315),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Cash & Withdrawals"
                         },
                         new
@@ -540,7 +541,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 38,
                             CategoryId = 8,
                             CategoryTypeId = 3,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4317),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Car Insurance"
                         },
                         new
@@ -548,7 +549,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 39,
                             CategoryId = 8,
                             CategoryTypeId = 3,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4319),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Home Insurance"
                         },
                         new
@@ -556,7 +557,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 40,
                             CategoryId = 8,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4322),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Other Insurance"
                         },
                         new
@@ -564,7 +565,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 41,
                             CategoryId = 8,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4324),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Savings"
                         },
                         new
@@ -572,7 +573,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 42,
                             CategoryId = 8,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4326),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Investments"
                         },
                         new
@@ -580,7 +581,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 43,
                             CategoryId = 9,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4328),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Childcare Expenses"
                         },
                         new
@@ -588,7 +589,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 44,
                             CategoryId = 9,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4330),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Child Activities"
                         },
                         new
@@ -596,7 +597,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 45,
                             CategoryId = 10,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4332),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Medical"
                         },
                         new
@@ -604,7 +605,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 46,
                             CategoryId = 10,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4334),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Dentist"
                         },
                         new
@@ -612,7 +613,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 47,
                             CategoryId = 10,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4336),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Fitness"
                         },
                         new
@@ -620,7 +621,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 48,
                             CategoryId = 11,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4338),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Travel & Vacations"
                         },
                         new
@@ -628,7 +629,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 49,
                             CategoryId = 11,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4340),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Entertainment & Leisure"
                         },
                         new
@@ -636,7 +637,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 50,
                             CategoryId = 11,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4342),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Hobbies & Crafts"
                         },
                         new
@@ -644,7 +645,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 51,
                             CategoryId = 11,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4345),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Pets"
                         },
                         new
@@ -652,7 +653,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 52,
                             CategoryId = 11,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4347),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Fun Money"
                         },
                         new
@@ -660,7 +661,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 53,
                             CategoryId = 11,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4349),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Personal Care"
                         },
                         new
@@ -668,7 +669,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 54,
                             CategoryId = 11,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4351),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Subscriptions & Memberships"
                         },
                         new
@@ -676,7 +677,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 55,
                             CategoryId = 12,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4353),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Advertising & Marketing"
                         },
                         new
@@ -684,7 +685,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 56,
                             CategoryId = 12,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4355),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Office Supplies"
                         },
                         new
@@ -692,7 +693,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 57,
                             CategoryId = 12,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4357),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Software & Tools"
                         },
                         new
@@ -700,7 +701,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 58,
                             CategoryId = 12,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4359),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Business Utilities"
                         },
                         new
@@ -708,7 +709,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 59,
                             CategoryId = 12,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4361),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Employee Salaries"
                         },
                         new
@@ -716,7 +717,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 60,
                             CategoryId = 12,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4363),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Business Travel"
                         },
                         new
@@ -724,7 +725,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 61,
                             CategoryId = 12,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4365),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Business Insurance"
                         },
                         new
@@ -732,7 +733,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 62,
                             CategoryId = 12,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4367),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Business Rent"
                         },
                         new
@@ -740,7 +741,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 63,
                             CategoryId = 12,
                             CategoryTypeId = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4369),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Other Business Expenses"
                         },
                         new
@@ -748,7 +749,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 64,
                             CategoryId = 13,
                             CategoryTypeId = 4,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4372),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Uncategorized"
                         },
                         new
@@ -756,7 +757,7 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                             SubcategoryID = 65,
                             CategoryId = 13,
                             CategoryTypeId = 4,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4374),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             SubcategoryName = "Miscellaneous Expenses"
                         });
                 });
@@ -784,18 +785,18 @@ namespace Moneymanager.Services.TransactionAPI.Migrations
                         new
                         {
                             TransactionTypeID = 1,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4470),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             TransactionTypeName = "Credit"
                         },
                         new
                         {
                             TransactionTypeID = 2,
-                            CreatedDate = new DateTime(2025, 12, 15, 21, 16, 20, 558, DateTimeKind.Local).AddTicks(4472),
+                            CreatedDate = new DateTime(2025, 12, 16, 0, 0, 0, 0, DateTimeKind.Local),
                             TransactionTypeName = "Debit"
                         });
                 });
 
-            modelBuilder.Entity("Moneymanager.Services.TransactionAPI.Models.AccountTransaction", b =>
+            modelBuilder.Entity("Moneymanager.Services.TransactionAPI.Models.AccountTransactions", b =>
                 {
                     b.HasOne("Moneymanager.Services.TransactionAPI.Models.Subcategory", "Subcategory")
                         .WithMany()

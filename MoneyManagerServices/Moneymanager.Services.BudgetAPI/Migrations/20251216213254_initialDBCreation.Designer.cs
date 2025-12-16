@@ -11,8 +11,8 @@ using Moneymanager.Services.BudgetAPI.Data;
 namespace Moneymanager.Services.BudgetAPI.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20251215035449_initialTableCreation")]
-    partial class initialTableCreation
+    [Migration("20251216213254_initialDBCreation")]
+    partial class initialDBCreation
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace Moneymanager.Services.BudgetAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Moneymanager.Services.BudgetAPI.Models.Budget", b =>
+            modelBuilder.Entity("Moneymanager.Services.BudgetAPI.Models.Budgets", b =>
                 {
                     b.Property<int>("BudgetId")
                         .ValueGeneratedOnAdd()
@@ -38,9 +38,13 @@ namespace Moneymanager.Services.BudgetAPI.Migrations
                     b.Property<int>("SubcategoryId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("BudgetId");
 
-                    b.ToTable("Budget");
+                    b.ToTable("Budgets");
                 });
 #pragma warning restore 612, 618
         }

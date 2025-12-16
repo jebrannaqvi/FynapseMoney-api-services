@@ -21,7 +21,7 @@ namespace Moneymanager.Services.RecommendationAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Moneymanager.Services.RecommendationAPI.Models.Recommendation", b =>
+            modelBuilder.Entity("Moneymanager.Services.RecommendationAPI.Models.Recommendations", b =>
                 {
                     b.Property<int>("RecommendationId")
                         .ValueGeneratedOnAdd()
@@ -33,12 +33,13 @@ namespace Moneymanager.Services.RecommendationAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RecommendationId");
 
-                    b.ToTable("Recommendation");
+                    b.ToTable("Recommendations");
                 });
 #pragma warning restore 612, 618
         }

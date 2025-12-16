@@ -5,7 +5,7 @@
 namespace Moneymanager.Services.NetworthAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDBCreation : Migration
+    public partial class initialDBCreation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,7 @@ namespace Moneymanager.Services.NetworthAPI.Migrations
                 {
                     FinancialAssetId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AssetName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AssetType = table.Column<int>(type: "int", nullable: false),
                     AssetValue = table.Column<double>(type: "float", nullable: false),
@@ -33,7 +33,7 @@ namespace Moneymanager.Services.NetworthAPI.Migrations
                 {
                     FinancialId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LiabilityName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LiabilityType = table.Column<int>(type: "int", nullable: false),
                     AmountOwed = table.Column<double>(type: "float", nullable: false),

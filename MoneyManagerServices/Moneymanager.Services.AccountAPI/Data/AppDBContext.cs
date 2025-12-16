@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
-using Moneymanager.Services.RecommendationAPI.Models;
+using Moneymanager.Services.AccountAPI.Models;
 
-namespace Moneymanager.Services.RecommendationAPI.Data
+
+namespace Moneymanager.Services.AccountAPI.Data
 {
     public class AppDBContext : DbContext
 
@@ -12,7 +13,7 @@ namespace Moneymanager.Services.RecommendationAPI.Data
 
         }
 
-        public DbSet<Recommendations> Recommendations { get; set; }
+        public DbSet<Accounts> Accounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

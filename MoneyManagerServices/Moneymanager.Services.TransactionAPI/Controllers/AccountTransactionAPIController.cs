@@ -75,8 +75,8 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetByBankID/{bankId}")]
-        public async Task<ResponseDTO> GetByBankID(int bankId)
+        [Route("GetByAccountID/{accountId}")]
+        public async Task<ResponseDTO> GetByBankID(int accountId)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
                                                                            .ThenInclude(sc => sc.Category)
                                                                            .Include(at => at.Subcategory.CategoryType)
                                                                            .Include(at => at.TransactionType)
-                                                                           .Where(u => u.BankAccountID == bankId)
+                                                                           .Where(u => u.AccountID == accountId)
                                                                            .ToListAsync();
 
                 _responseDTO.Result = _mapper.Map<IEnumerable<AccountTransactionDTO>>(accountTransactions);
@@ -106,7 +106,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
         {
             try
             {
-                AccountTransaction accountTransaction = _mapper.Map<AccountTransaction>(actTrnDto);
+                AccountTransactions accountTransaction = _mapper.Map<AccountTransactions>(actTrnDto);
                 _dbContext.AccountTransactions.Add(accountTransaction);
                 _dbContext.SaveChanges();
 
@@ -129,7 +129,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
         {
             try
             {
-                AccountTransaction accountTransaction = _mapper.Map<AccountTransaction>(actTrnDto);
+                AccountTransactions accountTransaction = _mapper.Map<AccountTransactions>(actTrnDto);
                 _dbContext.AccountTransactions.Update(accountTransaction);
                 _dbContext.SaveChanges();
 

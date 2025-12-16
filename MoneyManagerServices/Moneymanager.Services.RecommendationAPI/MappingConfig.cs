@@ -14,7 +14,7 @@ namespace Moneymanager.Services.RecommendationAPI
             var mappingConfig = new MapperConfiguration(cfg =>
             {
                 // Add your mappings here
-                cfg.CreateMap<Recommendation, RecommendationDTO>().ReverseMap();
+                cfg.CreateMap<Recommendations, RecommendationDTO>().ReverseMap();
                 //cfg.CreateMap<AccountTransactionDTO, AccountTransaction>().ReverseMap();
                 //cfg.CreateMap<Subcategory, SubcategoryDTO>().ReverseMap();
                 //cfg.CreateMap<CategoryDTO, Category>().ReverseMap();

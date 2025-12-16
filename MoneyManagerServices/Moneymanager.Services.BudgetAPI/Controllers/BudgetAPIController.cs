@@ -34,7 +34,7 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
         {
             try
             {
-                var budgets = _dbContext.Budget.ToList();
+                var budgets = _dbContext.Budgets.ToList();
                 foreach (var budget in budgets)
                 {
                     budget.Subcategory = await _accountTransactionService.GetSubcategoryById(budget.SubcategoryId);
@@ -58,7 +58,7 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
         {
             try
             {
-                var budget = _dbContext.Budget.FirstOrDefault(at => at.BudgetId == id);
+                var budget = _dbContext.Budgets.FirstOrDefault(at => at.BudgetId == id);
                 if (budget != null)
                 {
                     budget.Subcategory = await _accountTransactionService.GetSubcategoryById(budget.SubcategoryId);
@@ -84,8 +84,8 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
         {
             try
             {
-                Budget budget = _mapper.Map<Budget>(bdgtdto);
-                _dbContext.Budget.Add(budget);
+                Budgets budget = _mapper.Map<Budgets>(bdgtdto);
+                _dbContext.Budgets.Add(budget);
                 _dbContext.SaveChanges();
 
                 _responseDTO.Result = _mapper.Map<BudgetDTO>(budget);
@@ -107,8 +107,8 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
         {
             try
             {
-                Budget budget = _mapper.Map<Budget>(budgetDto);
-                _dbContext.Budget.Update(budget);
+                Budgets budget = _mapper.Map<Budgets>(budgetDto);
+                _dbContext.Budgets.Update(budget);
                 _dbContext.SaveChanges();
 
                 _responseDTO.Result = _mapper.Map<BudgetDTO>(budget);

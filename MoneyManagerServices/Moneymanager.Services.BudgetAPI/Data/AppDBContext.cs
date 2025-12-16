@@ -11,7 +11,7 @@ namespace Moneymanager.Services.BudgetAPI.Data
 
         }
 
-        public DbSet<Models.Budget> Budget { get; set; }
+        public DbSet<Models.Budgets> Budgets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

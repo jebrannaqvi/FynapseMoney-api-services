@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
-using Moneymanager.Services.NetworthAPI.Models;
-using Moneymanager.Services.NetworthAPI.Models.DTO;
+using Moneymanager.Services.AccountAPI.Models;
+using Moneymanager.Services.AccountAPI.Models.DTO;
 
-namespace Moneymanager.Services.NetworthAPI
+namespace Moneymanager.Services.AccountAPI
 {
     public class MappingConfig
     {
@@ -14,8 +14,8 @@ namespace Moneymanager.Services.NetworthAPI
             var mappingConfig = new MapperConfiguration(cfg =>
             {
                 // Add your mappings here
-                cfg.CreateMap<FinancialAsset, FinancialAssetDTO>().ReverseMap();
-                cfg.CreateMap<FinancialLiabilities, FinancialLiabilityDTO>().ReverseMap();
+                cfg.CreateMap<Accounts, AccountDTO>().ReverseMap();
+              
             }, loggerFactory);
 
             return mappingConfig;

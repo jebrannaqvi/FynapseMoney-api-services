@@ -17,7 +17,7 @@ namespace Moneymanager.Services.TransactionAPI.Data
         public DbSet<Models.Subcategory> Subcategories { get; set; }
        
         public DbSet<Models.TransaationType> TransacationTypes { get; set; }
-        public DbSet<Models.AccountTransaction> AccountTransactions { get; set; }
+        public DbSet<Models.AccountTransactions> AccountTransactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
