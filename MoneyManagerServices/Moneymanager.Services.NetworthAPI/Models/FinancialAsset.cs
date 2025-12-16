@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using static Moneymanager.Services.NetworthAPI.Constants.Constants;
 
 namespace Moneymanager.Services.NetworthAPI.Models
@@ -12,6 +13,7 @@ namespace Moneymanager.Services.NetworthAPI.Models
         [Required]
         public string AssetName { get; set; }
         [Required]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public AssetType AssetType { get; set; }
         [Required]
         public double AssetValue { get; set; }
