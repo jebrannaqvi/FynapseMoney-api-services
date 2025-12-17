@@ -133,15 +133,16 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
         }
 
 
-        [HttpPut]
-        [Route("financialasset")]
-        public ResponseDTO put([FromBody] FinancialAssetDTO financialAssetDTO)
+        [HttpPatch]
+        [Route("financialasset/updatebalance")]
+        public ResponseDTO UpdateBalance([FromBody] FinancialAssetValueDTO financialAssetValue)
         {
             try
             {
-                //TODO: Add AccountID as optional field for Financial Asset
 
-                FinancialAsset asset = _mapper.Map<FinancialAsset>(financialAssetDTO);
+                FinancialAsset asset = _dbContext.Assets.FirstOrDefault(a => a.AccountID == financialAssetValue.AccountID);
+
+                asset.AssetValue = financialAssetValue.AssetValue;
                 _dbContext.Assets.Update(asset);
                 _dbContext.SaveChanges();
 
@@ -158,19 +159,19 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
 
         }
 
-        [HttpPut]
-        [Route("financialliability")]
-        public ResponseDTO put([FromBody] FinancialLiabilities financialLiabilityDTO)
+        [HttpPatch]
+        [Route("financialliability/updatebalance")]
+        public ResponseDTO UpdateBalance([FromBody] FinancialLiabilityValueDTO financialLiabilityValue)
         {
             try
             {
-                //TODO: Add AccountID as optional field for Financial Liability
+                FinancialLiabilities liability = _dbContext.Liabilities.FirstOrDefault(a => a.AccountID == financialLiabilityValue.AccountID);
 
-                FinancialLiabilities liability = _mapper.Map<FinancialLiabilities>(financialLiabilityDTO);
+                liability.AmountOwed = financialLiabilityValue.AmountOwed;
                 _dbContext.Liabilities.Update(liability);
                 _dbContext.SaveChanges();
 
-                _responseDTO.Result = _mapper.Map<FinancialAssetDTO>(liability);
+                _responseDTO.Result = _mapper.Map<FinancialLiabilityDTO>(liability);
             }
             catch (Exception ex)
             {

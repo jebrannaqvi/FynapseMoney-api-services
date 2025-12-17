@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Moneymanager.Services.AccountAPI;
 using Moneymanager.Services.AccountAPI.Data;
+using Moneymanager.Services.AccountAPI.Services;
+using Moneymanager.Services.AccountAPI.Services.IServices;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -18,6 +20,14 @@ builder.Services.AddDbContext<AppDBContext>(options =>
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<INetworthService, NetworthService>();
+
+builder.Services.AddHttpClient("Networth", c =>
+{
+    c.BaseAddress = new Uri(builder.Configuration["ServiceUrls:NetworthAPI"]);
+});
+
 
 builder.Services.AddControllers()
     .AddJsonOptions(opts =>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moneymanager.Services.AccountAPI.Data;
 using Moneymanager.Services.AccountAPI.Models;
 using Moneymanager.Services.AccountAPI.Models.DTO;
+using Moneymanager.Services.AccountAPI.Services.IServices;
 
 namespace Moneymanager.Services.AccountAPI.Controllers
 {
@@ -14,11 +15,13 @@ namespace Moneymanager.Services.AccountAPI.Controllers
         private readonly AppDBContext _dbContext;
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
+        private INetworthService _networthService;
 
-        public AccountController(AppDBContext dbContext, IMapper mapper)
+        public AccountController(AppDBContext dbContext, IMapper mapper, INetworthService networthService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _networthService = networthService;
             _responseDTO = new ResponseDTO();
         }
 
@@ -81,7 +84,7 @@ namespace Moneymanager.Services.AccountAPI.Controllers
         }
 
         [HttpPost]
-        public ResponseDTO Post([FromBody] AccountDTO actdto)
+        public async Task<ResponseDTO> Post([FromBody] AccountDTO actdto)
         {
             try
             {
@@ -94,6 +97,31 @@ namespace Moneymanager.Services.AccountAPI.Controllers
                 _dbContext.SaveChanges();
 
                 // TODO: Post to NetworthAPI and add new financial asset or financial liability based on AccountType. 
+                if (account.AccountType == Constants.Constants.AccountTypes.Credit)
+                {
+                    FinancialLiabilityDTO financialLiability = new()
+                    {
+                        AccountID = account.AccountID,
+                        UserId = account.UserID,
+                        LiabilityName = account.BankName,
+                        AmountOwed = account.CurrentBalance
+                    };
+
+                    await _networthService.AddAccountAsLiability(financialLiability);
+                }
+                else
+                {
+                    FinancialAssetDTO financialAsset = new()
+                    {
+                        AccountID = account.AccountID,
+                        UserId = account.UserID,
+                        AssetName = account.BankName,
+                        AssetType = Constants.Constants.AssetType.Cash,
+                        AssetValue = account.CurrentBalance
+                    };
+
+                    await _networthService.AddAccountAsAsset(financialAsset);
+                }
 
 
                 _responseDTO.Result = _mapper.Map<AccountDTO>(account);
@@ -133,9 +161,9 @@ namespace Moneymanager.Services.AccountAPI.Controllers
 
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("updatebalance")]
-        public ResponseDTO put([FromBody] AccountBalanceDTO abDTO)
+        public ResponseDTO UpdateBalance([FromBody] AccountBalanceDTO abDTO)
         {
             try
             {
@@ -150,6 +178,17 @@ namespace Moneymanager.Services.AccountAPI.Controllers
                     account.CurrentBalance = account.CurrentBalance + abDTO.TransactionAmount;
                     _dbContext.Accounts.Update(account);
                     _dbContext.SaveChanges();
+
+                    // update balance in NetworthAPI
+                    if (account.AccountType == Constants.Constants.AccountTypes.Credit)
+                    {
+                        _networthService.UpdateLiabilityAmount(account.AccountID, account.CurrentBalance);
+                    }
+                    else
+                    {
+                        _networthService.UpdateAssetValue(account.AccountID, account.CurrentBalance);
+                    }
+
                     _responseDTO.Result = _mapper.Map<AccountDTO>(account);
                 }
                 else

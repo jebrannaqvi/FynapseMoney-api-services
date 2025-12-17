@@ -10,6 +10,7 @@ namespace Moneymanager.Services.NetworthAPI.Models
         public int FinancialId { get; set; }
         [Required]
         public string UserId { get; set; }
+        public int? AccountID { get; set; }
         [Required]
         public string LiabilityName { get; set; }
         [Required]

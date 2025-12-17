@@ -1,7 +1,7 @@
-﻿using static Moneymanager.Services.NetworthAPI.Constants.Constants;
+﻿using static Moneymanager.Services.AccountAPI.Constants.Constants;
 using System.ComponentModel.DataAnnotations;
 
-namespace Moneymanager.Services.NetworthAPI.Models.DTO
+namespace Moneymanager.Services.AccountAPI.Models.DTO
 {
     public class FinancialAssetDTO
     {

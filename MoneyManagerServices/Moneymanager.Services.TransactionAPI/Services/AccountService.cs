@@ -19,7 +19,7 @@ namespace Moneymanager.Services.TransactionAPI.Services
             {
                 var client = _httpClientFactory.CreateClient("Account");
                 HttpRequestMessage message = new();
-                message.Method = HttpMethod.Put;
+                message.Method = HttpMethod.Post;
                 message.RequestUri = new Uri(client.BaseAddress + "api/account/updatebalance");
                 message.Content = new StringContent(JsonConvert.SerializeObject(transactionUpdate),
                     System.Text.Encoding.UTF8, "application/json");

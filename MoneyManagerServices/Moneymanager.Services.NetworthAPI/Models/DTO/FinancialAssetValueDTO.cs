@@ -3,14 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Moneymanager.Services.NetworthAPI.Models.DTO
 {
-    public class FinancialAssetDTO
+    public class FinancialAssetValueDTO
     {
-        public int FinancialAssetId { get; set; }
-        public string UserId { get; set; }
         public int? AccountID { get; set; }
-        public string AssetName { get; set; }
-        public AssetType AssetType { get; set; }
         public double AssetValue { get; set; }
-        public double? GrowthRate { get; set; }
     }
 }

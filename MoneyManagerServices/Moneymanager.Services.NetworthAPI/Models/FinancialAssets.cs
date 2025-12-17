@@ -10,6 +10,7 @@ namespace Moneymanager.Services.NetworthAPI.Models
         public int FinancialAssetId { get; set; }
         [Required]
         public string UserId { get; set; }
+        public int? AccountID { get; set; }
         [Required]
         public string AssetName { get; set; }
         [Required]
@@ -17,6 +18,8 @@ namespace Moneymanager.Services.NetworthAPI.Models
         public AssetType AssetType { get; set; }
         [Required]
         public double AssetValue { get; set; }
+        
+        
         public double? GrowthRate { get; set; }
     }
 }
