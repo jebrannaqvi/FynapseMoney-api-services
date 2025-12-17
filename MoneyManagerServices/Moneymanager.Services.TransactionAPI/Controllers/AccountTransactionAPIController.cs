@@ -152,13 +152,37 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
                 AccountTransactions accountTransaction = _mapper.Map<AccountTransactions>(actTrnDto);
                 if (actTrnDto.TransactionID != 0)
                 {
+                    AccountTransactions prevTransaction = _dbContext.AccountTransactions.FirstOrDefault(at => at.TransactionID == accountTransaction.TransactionID);
+
+                    if (prevTransaction != null && prevTransaction.Amount != accountTransaction.Amount)
+                    {
+                        // Update current balance of the associated account
+                        var amountDifference = accountTransaction.Amount - prevTransaction.Amount; 
+                        AccountBalanceDTO accountBalanceUpdate = new AccountBalanceDTO
+                        {
+                            AccountID = accountTransaction.AccountID,
+                            TransactionAmount = accountTransaction.TransactionTypeID == 1 ? amountDifference : -amountDifference
+                        };
+
+                        ResponseDTO accountResponse = _accountService.UpdateAccountBalance(accountBalanceUpdate).GetAwaiter().GetResult();
+
+                        accountTransaction.BalanceUpdated = accountResponse.IsSuccess;
+                        
+                    }
+
+                    _dbContext.AccountTransactions.Entry(prevTransaction).State = EntityState.Detached;
+
+                    //Update transaction in DB
                     _dbContext.AccountTransactions.Update(accountTransaction);
                     _dbContext.SaveChanges();
+
+
                 }
                 else
                 {
                     throw new Exception("Invalid TransactionID");
                 }
+
                 _responseDTO.Result = _mapper.Map<AccountTransactionDTO>(accountTransaction);
             }
             catch (Exception ex)
