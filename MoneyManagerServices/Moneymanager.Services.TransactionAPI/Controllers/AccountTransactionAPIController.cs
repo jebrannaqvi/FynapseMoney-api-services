@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Moneymanager.Services.TransactionAPI.Data;
 using Moneymanager.Services.TransactionAPI.Models;
 using Moneymanager.Services.TransactionAPI.Models.DTO;
+using Moneymanager.Services.TransactionAPI.Services;
+using Moneymanager.Services.TransactionAPI.Services.IServices;
 
 namespace Moneymanager.Services.TransactionAPI.Controllers
 {
@@ -16,11 +18,13 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
         private readonly AppDBContext _dbContext;
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
+        private IAccountService _accountService;
 
-        public AccountTransactionAPIController(AppDBContext dbContext, IMapper mapper)
+        public AccountTransactionAPIController(AppDBContext dbContext, IMapper mapper, IAccountService accountService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
+            _accountService = accountService;
             _responseDTO = new ResponseDTO();
 
 
@@ -102,7 +106,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
 
 
         [HttpPost]
-        public ResponseDTO Post([FromBody] AccountTransactionDTO actTrnDto)
+        public async Task<ResponseDTO> Post([FromBody] AccountTransactionDTO actTrnDto)
         {
             try
             {
@@ -110,6 +114,22 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
                 _dbContext.AccountTransactions.Add(accountTransaction);
                 _dbContext.SaveChanges();
 
+                // Update current balance of the associated account
+                AccountBalanceDTO accountBalanceUpdate = new AccountBalanceDTO
+                {
+                    AccountID = accountTransaction.AccountID,
+                    TransactionAmount = accountTransaction.TransactionTypeID == 1 ? accountTransaction.Amount : -accountTransaction.Amount
+                };
+
+                ResponseDTO accountResponse = await _accountService.UpdateAccountBalance(accountBalanceUpdate);
+
+                if (accountResponse.IsSuccess)
+                {
+                    accountTransaction.BalanceUpdated = true;
+                    _dbContext.AccountTransactions.Update(accountTransaction);
+                    _dbContext.SaveChanges();
+                }
+                
                 _responseDTO.Result = _mapper.Map<AccountTransactionDTO>(accountTransaction);
             }
             catch (Exception ex)
@@ -130,9 +150,15 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
             try
             {
                 AccountTransactions accountTransaction = _mapper.Map<AccountTransactions>(actTrnDto);
-                _dbContext.AccountTransactions.Update(accountTransaction);
-                _dbContext.SaveChanges();
-
+                if (actTrnDto.TransactionID != 0)
+                {
+                    _dbContext.AccountTransactions.Update(accountTransaction);
+                    _dbContext.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Invalid TransactionID");
+                }
                 _responseDTO.Result = _mapper.Map<AccountTransactionDTO>(accountTransaction);
             }
             catch (Exception ex)

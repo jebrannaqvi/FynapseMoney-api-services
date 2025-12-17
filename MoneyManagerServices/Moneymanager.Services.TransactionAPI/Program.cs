@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Moneymanager.Services.TransactionAPI;
 using Moneymanager.Services.TransactionAPI.Data;
+using Moneymanager.Services.TransactionAPI.Services;
+using Moneymanager.Services.TransactionAPI.Services.IServices;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -18,6 +20,14 @@ builder.Services.AddDbContext<AppDBContext>(options =>
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<IAccountService, AccountService>();
+
+builder.Services.AddHttpClient("Account", c =>
+{
+    c.BaseAddress = new Uri(builder.Configuration["ServiceUrls:AccountAPI"]);
+});
+
 
 builder.Services.AddControllers()
     .AddJsonOptions(opts =>

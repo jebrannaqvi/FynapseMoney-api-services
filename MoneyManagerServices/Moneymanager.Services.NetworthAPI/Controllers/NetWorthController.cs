@@ -88,6 +88,8 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
         {
             try
             {
+                //TODO: Add AccountID as optional field for Financial Asset
+
                 FinancialAsset financialAsset = _mapper.Map<FinancialAsset>(financialAssetDTO);
                 _dbContext.Assets.Add(financialAsset);
                 _dbContext.SaveChanges();
@@ -111,6 +113,8 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
         {
             try
             {
+                //TODO: Add AccountID as optional field for Financial Liability
+
                 FinancialLiabilities financialLiability = _mapper.Map<FinancialLiabilities>(financialLiabilityDTO);
                 _dbContext.Liabilities.Add(financialLiability);
                 _dbContext.SaveChanges();
@@ -135,6 +139,8 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
         {
             try
             {
+                //TODO: Add AccountID as optional field for Financial Asset
+
                 FinancialAsset asset = _mapper.Map<FinancialAsset>(financialAssetDTO);
                 _dbContext.Assets.Update(asset);
                 _dbContext.SaveChanges();
@@ -158,6 +164,8 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
         {
             try
             {
+                //TODO: Add AccountID as optional field for Financial Liability
+
                 FinancialLiabilities liability = _mapper.Map<FinancialLiabilities>(financialLiabilityDTO);
                 _dbContext.Liabilities.Update(liability);
                 _dbContext.SaveChanges();

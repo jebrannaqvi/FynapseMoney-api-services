@@ -15,27 +15,33 @@ namespace Moneymanager.Services.BudgetAPI.Services
 
         public async Task<SubcategoryDTO> GetSubcategoryById(int id)
         {
-            var client = _httpClientFactory.CreateClient("Category");
-            var response = await client.GetAsync($"/api/category/GetSubcategory/{id}");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var content = await response.Content.ReadAsStringAsync();
-                var resp = JsonSerializer.Deserialize<ResponseDTO>(content, new JsonSerializerOptions
+                var client = _httpClientFactory.CreateClient("Category");
+                var response = await client.GetAsync($"/api/category/GetSubcategory/{id}");
+                if (response.IsSuccessStatusCode)
                 {
-                    PropertyNameCaseInsensitive = true
-                });
-                if (resp.IsSuccess)
-                {
-                    var subcategory = JsonSerializer.Deserialize<SubcategoryDTO>(Convert.ToString(resp.Result), new JsonSerializerOptions
+                    var content = await response.Content.ReadAsStringAsync();
+                    var resp = JsonSerializer.Deserialize<ResponseDTO>(content, new JsonSerializerOptions
                     {
                         PropertyNameCaseInsensitive = true
                     });
-                    return subcategory;
+                    if (resp.IsSuccess)
+                    {
+                        var subcategory = JsonSerializer.Deserialize<SubcategoryDTO>(Convert.ToString(resp.Result), new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+                        return subcategory;
+                    }
                 }
+                return new SubcategoryDTO();
             }
-            return new SubcategoryDTO();
+            catch (Exception)
+            {
+                return new SubcategoryDTO();
+            }
 
-
-        }
+}
     }
 }

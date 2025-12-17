@@ -93,6 +93,9 @@ namespace Moneymanager.Services.AccountAPI.Controllers
                 _dbContext.Accounts.Add(account);
                 _dbContext.SaveChanges();
 
+                // TODO: Post to NetworthAPI and add new financial asset or financial liability based on AccountType. 
+
+
                 _responseDTO.Result = _mapper.Map<AccountDTO>(account);
             }
             catch (Exception ex)
@@ -115,7 +118,45 @@ namespace Moneymanager.Services.AccountAPI.Controllers
                 _dbContext.Accounts.Update(account);
                 _dbContext.SaveChanges();
 
+                // TODO: Post to NetworthAPI and update existing financial asset or financial liability based on AccountType. 
+
                 _responseDTO.Result = _mapper.Map<AccountDTO>(account);
+            }
+            catch (Exception ex)
+            {
+
+                _responseDTO.IsSuccess = false;
+                _responseDTO.DisplayMessage = ex.Message;
+            }
+
+            return _responseDTO;
+
+        }
+
+        [HttpPut]
+        [Route("updatebalance")]
+        public ResponseDTO put([FromBody] AccountBalanceDTO abDTO)
+        {
+            try
+            {
+                Accounts? account = _dbContext.Accounts.FirstOrDefault(at => at.AccountID == abDTO.AccountID);
+
+                if (account != null)
+                {
+                    if (account.AccountType == Constants.Constants.AccountTypes.Credit)
+                    {
+                        abDTO.TransactionAmount = -abDTO.TransactionAmount;
+                    }
+                    account.CurrentBalance = account.CurrentBalance + abDTO.TransactionAmount;
+                    _dbContext.Accounts.Update(account);
+                    _dbContext.SaveChanges();
+                    _responseDTO.Result = _mapper.Map<AccountDTO>(account);
+                }
+                else
+                {
+                    _responseDTO.IsSuccess = false;
+                    _responseDTO.DisplayMessage = "Account not found.";
+                }
             }
             catch (Exception ex)
             {

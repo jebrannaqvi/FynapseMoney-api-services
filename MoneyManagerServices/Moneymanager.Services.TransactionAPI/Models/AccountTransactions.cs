@@ -23,5 +23,6 @@ namespace Moneymanager.Services.TransactionAPI.Models
         public int TransactionTypeID { get; set; }
         [ForeignKey("TransactionTypeID")]
         public TransaationType TransactionType { get; set; } // e.g. credit, debit
+        public bool BalanceUpdated { get; set; } = false;
     }
 }
