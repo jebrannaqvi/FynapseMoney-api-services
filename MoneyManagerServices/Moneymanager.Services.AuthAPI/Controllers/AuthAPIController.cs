@@ -51,7 +51,7 @@ namespace Moneymanager.Services.AuthAPI.Controllers
         }
 
         [HttpPost("assignRole")]
-        public async Task<IActionResult> AssignRole([FromBody] RegistrationRequestDTO model)
+        public async Task<IActionResult> AssignRole([FromBody] UserRoleDTO model)
         {
             var assignRoleSuccessful = await _authService.AssignRole(model.UserName, model.Role.ToUpper());
             if (!assignRoleSuccessful)
