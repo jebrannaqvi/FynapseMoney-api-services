@@ -38,7 +38,7 @@ namespace Moneymanager.Services.AuthAPI.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO model)
         {
             var loginResponse = await _authService.Login(model);
-            if (loginResponse == null || string.IsNullOrEmpty(loginResponse.Token))
+            if (loginResponse == null || loginResponse.User == null)
             {
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = "Username or password is incorrect";
@@ -61,6 +61,22 @@ namespace Moneymanager.Services.AuthAPI.Controllers
                 return BadRequest(_responseDTO);
             }
 
+            return Ok(_responseDTO);
+
+        }
+
+        [HttpPost("validateOTP")]
+        public async Task<IActionResult> ValidateOTP([FromBody] OneTimeCodeDTO codeDTO)
+        {
+            
+            var loginResponse = await _authService.ValidateOTPAsync(codeDTO);
+            if (loginResponse == null || string.IsNullOrEmpty(loginResponse.Token))
+            {
+                _responseDTO.IsSuccess = false;
+                _responseDTO.DisplayMessage = "Invalid OTP code";
+                return BadRequest(_responseDTO);
+            }
+            _responseDTO.Result = loginResponse;
             return Ok(_responseDTO);
 
         }

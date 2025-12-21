@@ -8,5 +8,7 @@ namespace Moneymanager.Services.AuthAPI.Services.IService
         Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO);
 
         Task<bool> AssignRole(string userName, string roleName);
+
+        Task<LoginResponseDTO> ValidateOTPAsync (OneTimeCodeDTO oneTimeCodeDTO);
     }
 }
