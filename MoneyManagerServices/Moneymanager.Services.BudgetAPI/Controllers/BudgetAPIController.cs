@@ -18,15 +18,15 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
         private IAccountTransactionService _accountTransactionService;
+        private readonly ILogger<BudgetAPIController> _logger;
 
-        public BudgetAPIController(AppDBContext dbContext, IMapper mapper, IAccountTransactionService accountTransactionService)
+        public BudgetAPIController(AppDBContext dbContext, IMapper mapper, IAccountTransactionService accountTransactionService, ILogger<BudgetAPIController> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _responseDTO = new ResponseDTO();
             _accountTransactionService = accountTransactionService;
-
-
+            _logger = logger;
         }
 
         [HttpGet]
@@ -44,7 +44,7 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching all budgets with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -68,7 +68,7 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching budget by ID with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -92,7 +92,7 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while creating a new budget with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -115,7 +115,7 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while updating budget with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }

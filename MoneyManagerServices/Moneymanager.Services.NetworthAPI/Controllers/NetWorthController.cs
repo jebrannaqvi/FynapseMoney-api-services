@@ -14,12 +14,14 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
         private readonly AppDBContext _dbContext;
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
+        private readonly  ILogger<NetWorthController> _logger;
 
-        public NetWorthController(AppDBContext dbContext, IMapper mapper)
+        public NetWorthController(AppDBContext dbContext, IMapper mapper, ILogger<NetWorthController> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _responseDTO = new ResponseDTO();
+            _logger = logger;
         }
 
         [HttpGet]
@@ -42,7 +44,7 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching net worth with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -71,7 +73,7 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching net worth by UserID with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -98,7 +100,7 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while creating a new financial asset with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -123,7 +125,7 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while creating a new financial liability with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -150,7 +152,7 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while updating financial asset balance with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -175,7 +177,7 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while updating financial liability balance with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }

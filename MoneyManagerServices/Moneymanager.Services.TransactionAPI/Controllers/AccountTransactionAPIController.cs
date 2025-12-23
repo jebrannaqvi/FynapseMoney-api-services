@@ -19,15 +19,15 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
         private IAccountService _accountService;
+        private readonly ILogger<AccountTransactionAPIController> _logger;
 
-        public AccountTransactionAPIController(AppDBContext dbContext, IMapper mapper, IAccountService accountService)
+        public AccountTransactionAPIController(AppDBContext dbContext, IMapper mapper, IAccountService accountService, ILogger<AccountTransactionAPIController> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _accountService = accountService;
             _responseDTO = new ResponseDTO();
-
-
+            _logger = logger;
         }
 
         [HttpGet]
@@ -45,7 +45,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching all account transactions with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -69,7 +69,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching account transaction by ID with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -95,7 +95,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching account transactions by AccountID with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -134,7 +134,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while creating a new account transaction with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -187,7 +187,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while updating account transaction with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }

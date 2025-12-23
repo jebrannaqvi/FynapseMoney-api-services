@@ -16,13 +16,15 @@ namespace Moneymanager.Services.AccountAPI.Controllers
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
         private INetworthService _networthService;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(AppDBContext dbContext, IMapper mapper, INetworthService networthService)
+        public AccountController(AppDBContext dbContext, IMapper mapper, INetworthService networthService, ILogger<AccountController> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _networthService = networthService;
             _responseDTO = new ResponseDTO();
+            _logger = logger;
         }
 
         [HttpGet]
@@ -30,12 +32,13 @@ namespace Moneymanager.Services.AccountAPI.Controllers
         {
             try
             {
+                _logger.LogInformation("Fetching all accounts");
                 var account = _dbContext.Accounts.ToList();
                 _responseDTO.Result = _mapper.Map<IEnumerable<AccountDTO>>(account);
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching accounts with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -49,12 +52,14 @@ namespace Moneymanager.Services.AccountAPI.Controllers
         {
             try
             {
+
                 var account = _dbContext.Accounts.FirstOrDefault(at => at.AccountID == id);
                 _responseDTO.Result = _mapper.Map<AccountDTO>(account);
             }
             catch (Exception ex)
             {
 
+                _logger.LogError(ex, "Error occurred while fetching account by ID with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -74,7 +79,7 @@ namespace Moneymanager.Services.AccountAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching account by ID with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -128,7 +133,7 @@ namespace Moneymanager.Services.AccountAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while adding new account with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -152,7 +157,7 @@ namespace Moneymanager.Services.AccountAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while updating account with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -199,7 +204,7 @@ namespace Moneymanager.Services.AccountAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while updating account balance with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }

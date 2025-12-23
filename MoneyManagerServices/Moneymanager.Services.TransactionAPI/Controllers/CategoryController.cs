@@ -15,12 +15,14 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
         private readonly AppDBContext _dbContext;
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
+        private ILogger<CategoryController> _logger;
 
-        public CategoryController(AppDBContext dbContext, IMapper mapper)
+        public CategoryController(AppDBContext dbContext, IMapper mapper, ILogger<CategoryController> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _responseDTO = new ResponseDTO();
+            _logger = logger;
         }
 
         [HttpGet]
@@ -33,7 +35,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching all categories with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -52,7 +54,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching category by id with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -72,7 +74,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching all subcategories with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -92,7 +94,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching subcategory by id with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }

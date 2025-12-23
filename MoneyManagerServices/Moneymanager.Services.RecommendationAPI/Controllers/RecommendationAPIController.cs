@@ -16,12 +16,14 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
         private readonly AppDBContext _dbContext;
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
+        private readonly ILogger<RecommendationAPIController> _logger;
 
-        public RecommendationAPIController(AppDBContext dbContext, IMapper mapper)
+        public RecommendationAPIController(AppDBContext dbContext, IMapper mapper, ILogger<RecommendationAPIController> logger)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _responseDTO = new ResponseDTO();
+            _logger = logger;
 
 
         }
@@ -36,7 +38,7 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching all recommendations with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -55,7 +57,7 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while fetching recommendation by id with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -79,7 +81,7 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while creating recommendation with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }
@@ -102,7 +104,7 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Error occurred while updating recommendation with exception message: {exception}", ex.Message);
                 _responseDTO.IsSuccess = false;
                 _responseDTO.DisplayMessage = ex.Message;
             }

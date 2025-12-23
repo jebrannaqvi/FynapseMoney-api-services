@@ -5,11 +5,13 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>1c6879c2-ea2c-40e1-a363-61cc3820f367</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/33ce4edd-b9e1-416e-b762-cc5ac9b19164/resourceGroups/moneymanagerservices/providers/microsoft.insights/components/MoneymanagerAuthAPI</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
 	  <PackageReference Include="AutoMapper" Version="16.0.0" />
 	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+	  <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.22" />
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.22" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.22" />
