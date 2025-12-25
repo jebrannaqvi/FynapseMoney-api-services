@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Moneymanager.Services.AccountAPI;
 using Moneymanager.Services.AccountAPI.Data;
+using Moneymanager.Services.AccountAPI.Data.Interface;
 using Moneymanager.Services.AccountAPI.Services;
 using Moneymanager.Services.AccountAPI.Services.IServices;
 using System.Text;
@@ -22,6 +23,7 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<INetworthService, NetworthService>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 builder.Services.AddHttpClient("Networth", c =>
 {

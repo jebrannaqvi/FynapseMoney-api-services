@@ -13,7 +13,7 @@ namespace Moneymanager.Services.AccountAPI.Data
 
         }
 
-        public DbSet<Accounts> Accounts { get; set; }
+        public virtual DbSet<Accounts> Accounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

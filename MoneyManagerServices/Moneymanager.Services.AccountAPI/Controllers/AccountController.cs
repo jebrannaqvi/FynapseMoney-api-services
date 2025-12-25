@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moneymanager.Services.AccountAPI.Data;
+using Moneymanager.Services.AccountAPI.Data.Interface;
 using Moneymanager.Services.AccountAPI.Models;
 using Moneymanager.Services.AccountAPI.Models.DTO;
 using Moneymanager.Services.AccountAPI.Services.IServices;
@@ -12,15 +13,15 @@ namespace Moneymanager.Services.AccountAPI.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly AppDBContext _dbContext;
+        private readonly IAccountRepository _accountRepository;
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
         private INetworthService _networthService;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(AppDBContext dbContext, IMapper mapper, INetworthService networthService, ILogger<AccountController> logger)
+        public AccountController(IAccountRepository accountRepository, IMapper mapper, INetworthService networthService, ILogger<AccountController> logger)
         {
-            _dbContext = dbContext;
+            _accountRepository = accountRepository;
             _mapper = mapper;
             _networthService = networthService;
             _responseDTO = new ResponseDTO();
@@ -33,7 +34,7 @@ namespace Moneymanager.Services.AccountAPI.Controllers
             try
             {
                 _logger.LogInformation("Fetching all accounts");
-                var account = _dbContext.Accounts.ToList();
+                var account = _accountRepository.GetAllAccounts();
                 _responseDTO.Result = _mapper.Map<IEnumerable<AccountDTO>>(account);
             }
             catch (Exception ex)
@@ -53,7 +54,7 @@ namespace Moneymanager.Services.AccountAPI.Controllers
             try
             {
 
-                var account = _dbContext.Accounts.FirstOrDefault(at => at.AccountID == id);
+                var account = _accountRepository.GetAccountById(id);
                 _responseDTO.Result = _mapper.Map<AccountDTO>(account);
             }
             catch (Exception ex)
@@ -74,7 +75,7 @@ namespace Moneymanager.Services.AccountAPI.Controllers
         {
             try
             {
-                var account = _dbContext.Accounts.Where(at => at.UserID == userid).ToList();
+                var account = _accountRepository.GetAccountsByUserId(userid);
                 _responseDTO.Result = _mapper.Map<IEnumerable<AccountDTO>>(account);
             }
             catch (Exception ex)
@@ -93,13 +94,21 @@ namespace Moneymanager.Services.AccountAPI.Controllers
         {
             try
             {
+
+
+                if (actdto.AccountType is null || String.IsNullOrEmpty(actdto.BankName) || String.IsNullOrEmpty(actdto.UserID))
+                {
+                    throw new Exception("Invalid input values");
+
+                }
                 Accounts account = _mapper.Map<Accounts>(actdto);
+
                 if (actdto.CurrentBalance == 0)
                 {
                     account.CurrentBalance = actdto.StartingBalance;
                 }
-                _dbContext.Accounts.Add(account);
-                _dbContext.SaveChanges();
+                _accountRepository.CreateAccount(account);
+
 
                 // TODO: Post to NetworthAPI and add new financial asset or financial liability based on AccountType. 
                 if (account.AccountType == Constants.Constants.AccountTypes.Credit)
@@ -147,9 +156,15 @@ namespace Moneymanager.Services.AccountAPI.Controllers
         {
             try
             {
+                if (actDTO.AccountType is null || String.IsNullOrEmpty(actDTO.BankName) || String.IsNullOrEmpty(actDTO.UserID)
+                    || actDTO.AccountID == 0)
+                {
+                    throw new Exception("Invalid input values");
+
+                }
+
                 Accounts account = _mapper.Map<Accounts>(actDTO);
-                _dbContext.Accounts.Update(account);
-                _dbContext.SaveChanges();
+                _accountRepository.UpdateAccount(account);
 
                 // TODO: Post to NetworthAPI and update existing financial asset or financial liability based on AccountType. 
 
@@ -172,7 +187,13 @@ namespace Moneymanager.Services.AccountAPI.Controllers
         {
             try
             {
-                Accounts? account = _dbContext.Accounts.FirstOrDefault(at => at.AccountID == abDTO.AccountID);
+                if (abDTO.AccountID == 0 || abDTO.TransactionAmount == 0)
+                {
+                    throw new Exception("Invalid input values");
+
+                }
+
+                Accounts? account = _accountRepository.GetAccountById(abDTO.AccountID);
 
                 if (account != null)
                 {
@@ -181,8 +202,7 @@ namespace Moneymanager.Services.AccountAPI.Controllers
                         abDTO.TransactionAmount = -abDTO.TransactionAmount;
                     }
                     account.CurrentBalance = account.CurrentBalance + abDTO.TransactionAmount;
-                    _dbContext.Accounts.Update(account);
-                    _dbContext.SaveChanges();
+                    _accountRepository.UpdateAccount(account);
 
                     // update balance in NetworthAPI
                     if (account.AccountType == Constants.Constants.AccountTypes.Credit)
