@@ -1,6 +1,6 @@
 namespace Moneymanager.Test.NetworthAPITests
 {
-    public class UnitTest1
+    public class NetworthAPIControllerTests
     {
         [Fact]
         public void Test1()

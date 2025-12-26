@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moneymanager.Services.TransactionAPI.Data;
+using Moneymanager.Services.TransactionAPI.Data.IRepositories;
 using Moneymanager.Services.TransactionAPI.Models;
 using Moneymanager.Services.TransactionAPI.Models.DTO;
 using Moneymanager.Services.TransactionAPI.Services;
@@ -15,15 +16,15 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
     [ApiController]
     public class AccountTransactionAPIController : ControllerBase
     {
-        private readonly AppDBContext _dbContext;
+        private readonly IAccountTransactionRepository _accountTransactionRepository;
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
         private IAccountService _accountService;
         private readonly ILogger<AccountTransactionAPIController> _logger;
 
-        public AccountTransactionAPIController(AppDBContext dbContext, IMapper mapper, IAccountService accountService, ILogger<AccountTransactionAPIController> logger)
+        public AccountTransactionAPIController(IAccountTransactionRepository accountTransactionRepository, IMapper mapper, IAccountService accountService, ILogger<AccountTransactionAPIController> logger)
         {
-            _dbContext = dbContext;
+            _accountTransactionRepository = accountTransactionRepository;
             _mapper = mapper;
             _accountService = accountService;
             _responseDTO = new ResponseDTO();
@@ -35,11 +36,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
         {
             try
             {
-                var transactions = await _dbContext.AccountTransactions.Include(at => at.Subcategory)
-                                                                      .ThenInclude(sc => sc.Category)
-                                                                      .Include(at => at.Subcategory.CategoryType)
-                                                                      .Include(at => at.TransactionType)
-                                                                      .ToListAsync();
+                var transactions = await _accountTransactionRepository.GetAllTransactionsAsync();
 
                 _responseDTO.Result = _mapper.Map<IEnumerable<AccountTransactionDTO>>(transactions);
             }
@@ -59,11 +56,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
         {
             try
             {
-                var accountTransaction = await _dbContext.AccountTransactions.Include(at => at.Subcategory)
-                                                                            .ThenInclude(sc => sc.Category)
-                                                                            .Include(at => at.Subcategory.CategoryType)
-                                                                            .Include(at => at.TransactionType)
-                                                                            .FirstOrDefaultAsync(at => at.TransactionID == id);
+                var accountTransaction = await _accountTransactionRepository.GetTransactionByIdAsync(id);
 
                 _responseDTO.Result  = _mapper.Map<AccountTransactionDTO>(accountTransaction);
             }
@@ -84,12 +77,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
         {
             try
             {
-                var accountTransactions = await _dbContext.AccountTransactions.Include(at => at.Subcategory)
-                                                                           .ThenInclude(sc => sc.Category)
-                                                                           .Include(at => at.Subcategory.CategoryType)
-                                                                           .Include(at => at.TransactionType)
-                                                                           .Where(u => u.AccountID == accountId)
-                                                                           .ToListAsync();
+                var accountTransactions = await _accountTransactionRepository.GetTransactionByAccountIdAsync(accountId);
 
                 _responseDTO.Result = _mapper.Map<IEnumerable<AccountTransactionDTO>>(accountTransactions);
             }
@@ -111,8 +99,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
             try
             {
                 AccountTransactions accountTransaction = _mapper.Map<AccountTransactions>(actTrnDto);
-                _dbContext.AccountTransactions.Add(accountTransaction);
-                _dbContext.SaveChanges();
+                _accountTransactionRepository.CreateTransaction(accountTransaction);
 
                 // Update current balance of the associated account
                 AccountBalanceDTO accountBalanceUpdate = new AccountBalanceDTO
@@ -126,8 +113,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
                 if (accountResponse.IsSuccess)
                 {
                     accountTransaction.BalanceUpdated = true;
-                    _dbContext.AccountTransactions.Update(accountTransaction);
-                    _dbContext.SaveChanges();
+                    _accountTransactionRepository.UpdateTransaction(accountTransaction);
                 }
                 
                 _responseDTO.Result = _mapper.Map<AccountTransactionDTO>(accountTransaction);
@@ -152,7 +138,7 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
                 AccountTransactions accountTransaction = _mapper.Map<AccountTransactions>(actTrnDto);
                 if (actTrnDto.TransactionID != 0)
                 {
-                    AccountTransactions prevTransaction = _dbContext.AccountTransactions.FirstOrDefault(at => at.TransactionID == accountTransaction.TransactionID);
+                    AccountTransactions prevTransaction = _accountTransactionRepository.GetTransactionByIdAsync(actTrnDto.TransactionID).GetAwaiter().GetResult();
 
                     if (prevTransaction != null && prevTransaction.Amount != accountTransaction.Amount)
                     {
@@ -170,11 +156,10 @@ namespace Moneymanager.Services.TransactionAPI.Controllers
                         
                     }
 
-                    _dbContext.AccountTransactions.Entry(prevTransaction).State = EntityState.Detached;
+                    //_dbContext.AccountTransactions.Entry(prevTransaction).State = EntityState.Detached;
 
                     //Update transaction in DB
-                    _dbContext.AccountTransactions.Update(accountTransaction);
-                    _dbContext.SaveChanges();
+                    _accountTransactionRepository.UpdateTransaction(accountTransaction);
 
 
                 }

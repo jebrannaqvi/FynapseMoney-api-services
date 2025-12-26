@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moneymanager.Services.NetworthAPI.Data;
+using Moneymanager.Services.NetworthAPI.Data.IRepositories;
 using Moneymanager.Services.NetworthAPI.Models;
 using Moneymanager.Services.NetworthAPI.Models.DTO;
 
@@ -11,14 +12,14 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
     [ApiController]
     public class NetWorthController : ControllerBase
     {
-        private readonly AppDBContext _dbContext;
+        private readonly INetworthRepository _networthRepository;
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
         private readonly  ILogger<NetWorthController> _logger;
 
-        public NetWorthController(AppDBContext dbContext, IMapper mapper, ILogger<NetWorthController> logger)
+        public NetWorthController(INetworthRepository networthRepository, IMapper mapper, ILogger<NetWorthController> logger)
         {
-            _dbContext = dbContext;
+            _networthRepository = networthRepository;
             _mapper = mapper;
             _responseDTO = new ResponseDTO();
             _logger = logger;
@@ -29,8 +30,8 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
         {
             try
             {
-                var financialAssets = _dbContext.Assets.ToList();
-                var financialLiabilities = _dbContext.Liabilities.ToList();
+                var financialAssets = _networthRepository.GetAllFinancialAssets();
+                var financialLiabilities = _networthRepository.GetAllFinancialLiabilities();
                 var netWorth = new
                 {
                     Assets = _mapper.Map<IEnumerable<FinancialAssetDTO>>(financialAssets),
@@ -58,8 +59,8 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
         {
             try
             {
-                var financialAssets = _dbContext.Assets.Where(at => at.UserId == userId);
-                var financialLiabilities = _dbContext.Liabilities.Where(at => at.UserId == userId);
+                var financialAssets = _networthRepository.GetFinancialAssetsByUserId(userId);
+                var financialLiabilities = _networthRepository.GetFinancialLiabilitiesByUserId(userId);
                 var netWorth = new
                 {
                     Assets = _mapper.Map<IEnumerable<FinancialAssetDTO>>(financialAssets),
@@ -93,8 +94,7 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
                 //TODO: Add AccountID as optional field for Financial Asset
 
                 FinancialAsset financialAsset = _mapper.Map<FinancialAsset>(financialAssetDTO);
-                _dbContext.Assets.Add(financialAsset);
-                _dbContext.SaveChanges();
+                _networthRepository.CreateFinancialAsset(financialAsset);
 
                 _responseDTO.Result = _mapper.Map<FinancialAssetDTO>(financialAsset);
             }
@@ -118,8 +118,7 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
                 //TODO: Add AccountID as optional field for Financial Liability
 
                 FinancialLiabilities financialLiability = _mapper.Map<FinancialLiabilities>(financialLiabilityDTO);
-                _dbContext.Liabilities.Add(financialLiability);
-                _dbContext.SaveChanges();
+                _networthRepository.CreateFinancialLiability(financialLiability);
 
                 _responseDTO.Result = _mapper.Map<FinancialLiabilityDTO>(financialLiability);
             }
@@ -142,11 +141,10 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
             try
             {
 
-                FinancialAsset asset = _dbContext.Assets.FirstOrDefault(a => a.AccountID == financialAssetValue.AccountID);
+                FinancialAsset asset = _networthRepository.GetFinancialAssetByAccountID(financialAssetValue.AccountID);
 
                 asset.AssetValue = financialAssetValue.AssetValue;
-                _dbContext.Assets.Update(asset);
-                _dbContext.SaveChanges();
+                _networthRepository.UpdateFinancialAsset(asset);
 
                 _responseDTO.Result = _mapper.Map<FinancialAssetDTO>(asset);
             }
@@ -167,11 +165,10 @@ namespace Moneymanager.Services.NetworthAPI.Controllers
         {
             try
             {
-                FinancialLiabilities liability = _dbContext.Liabilities.FirstOrDefault(a => a.AccountID == financialLiabilityValue.AccountID);
+                FinancialLiabilities liability = _networthRepository.GetFinancialLiabilityByAccountID(financialLiabilityValue.AccountID);
 
                 liability.AmountOwed = financialLiabilityValue.AmountOwed;
-                _dbContext.Liabilities.Update(liability);
-                _dbContext.SaveChanges();
+                _networthRepository.UpdateFinancialLiability(liability);
 
                 _responseDTO.Result = _mapper.Map<FinancialLiabilityDTO>(liability);
             }

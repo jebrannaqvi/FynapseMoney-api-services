@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moneymanager.Services.BudgetAPI.Data;
+using Moneymanager.Services.BudgetAPI.Data.IRepositories;
 using Moneymanager.Services.BudgetAPI.Models;
 using Moneymanager.Services.BudgetAPI.Models.DTO;
 using Moneymanager.Services.BudgetAPI.Services.IServices;
@@ -14,15 +15,15 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
     [ApiController]
     public class BudgetAPIController : ControllerBase
     {
-        private readonly AppDBContext _dbContext;
+        private readonly IBudgetRepository _budgetRepository;
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
         private IAccountTransactionService _accountTransactionService;
         private readonly ILogger<BudgetAPIController> _logger;
 
-        public BudgetAPIController(AppDBContext dbContext, IMapper mapper, IAccountTransactionService accountTransactionService, ILogger<BudgetAPIController> logger)
+        public BudgetAPIController(IBudgetRepository budgetRepository, IMapper mapper, IAccountTransactionService accountTransactionService, ILogger<BudgetAPIController> logger)
         {
-            _dbContext = dbContext;
+            _budgetRepository = budgetRepository;
             _mapper = mapper;
             _responseDTO = new ResponseDTO();
             _accountTransactionService = accountTransactionService;
@@ -34,7 +35,7 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
         {
             try
             {
-                var budgets = _dbContext.Budgets.ToList();
+                var budgets = _budgetRepository.GetAllBudgets();
                 foreach (var budget in budgets)
                 {
                     budget.Subcategory = await _accountTransactionService.GetSubcategoryById(budget.SubcategoryId);
@@ -58,7 +59,7 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
         {
             try
             {
-                var budget = _dbContext.Budgets.FirstOrDefault(at => at.BudgetId == id);
+                var budget = _budgetRepository.GetBudgetById(id);
                 if (budget != null)
                 {
                     budget.Subcategory = await _accountTransactionService.GetSubcategoryById(budget.SubcategoryId);
@@ -85,8 +86,7 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
             try
             {
                 Budgets budget = _mapper.Map<Budgets>(bdgtdto);
-                _dbContext.Budgets.Add(budget);
-                _dbContext.SaveChanges();
+                _budgetRepository.CreateBudget(budget);
 
                 _responseDTO.Result = _mapper.Map<BudgetDTO>(budget);
             }
@@ -108,8 +108,7 @@ namespace Moneymanager.Services.BudgetAPI.Controllers
             try
             {
                 Budgets budget = _mapper.Map<Budgets>(budgetDto);
-                _dbContext.Budgets.Update(budget);
-                _dbContext.SaveChanges();
+                _budgetRepository.UpdateBudget(budget);
 
                 _responseDTO.Result = _mapper.Map<BudgetDTO>(budget);
             }

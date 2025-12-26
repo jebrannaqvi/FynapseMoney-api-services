@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moneymanager.Services.RecommendationAPI.Data;
+using Moneymanager.Services.RecommendationAPI.Data.IRepositories;
 using Moneymanager.Services.RecommendationAPI.Models;
 using Moneymanager.Services.RecommendationAPI.Models.DTO;
 
@@ -13,14 +14,14 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
     [ApiController]
     public class RecommendationAPIController : ControllerBase
     {
-        private readonly AppDBContext _dbContext;
+        private readonly IRecommendationRepository _recommendationRepository;
         private ResponseDTO _responseDTO;
         private IMapper _mapper;
         private readonly ILogger<RecommendationAPIController> _logger;
 
-        public RecommendationAPIController(AppDBContext dbContext, IMapper mapper, ILogger<RecommendationAPIController> logger)
+        public RecommendationAPIController(IRecommendationRepository recommendationRepository, IMapper mapper, ILogger<RecommendationAPIController> logger)
         {
-            _dbContext = dbContext;
+            _recommendationRepository = recommendationRepository;
             _mapper = mapper;
             _responseDTO = new ResponseDTO();
             _logger = logger;
@@ -33,7 +34,7 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
         {
             try
             {
-                var recommendation = _dbContext.Recommendations.ToList();
+                var recommendation = _recommendationRepository.GetAllRecommendations();
                 _responseDTO.Result = _mapper.Map<IEnumerable<RecommendationDTO>>(recommendation);
             }
             catch (Exception ex)
@@ -52,7 +53,7 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
         {
             try
             {
-                var recommendation = _dbContext.Recommendations.FirstOrDefault(at => at.RecommendationId == id);
+                var recommendation = _recommendationRepository.GetRecommendationById(id);
                 _responseDTO.Result  = _mapper.Map<RecommendationDTO>(recommendation);
             }
             catch (Exception ex)
@@ -74,8 +75,7 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
             try
             {
                 Recommendations recommendation = _mapper.Map<Recommendations>(recdto);
-                _dbContext.Recommendations.Add(recommendation);
-                _dbContext.SaveChanges();
+                _recommendationRepository.CreateRecommendation(recommendation);
 
                 _responseDTO.Result = _mapper.Map<RecommendationDTO>(recommendation);
             }
@@ -97,8 +97,7 @@ namespace Moneymanager.Services.RecommendationAPI.Controllers
             try
             {
                 Recommendations recommendation = _mapper.Map<Recommendations>(recommendationDTO);
-                _dbContext.Recommendations.Update(recommendation);
-                _dbContext.SaveChanges();
+                _recommendationRepository.UpdateRecommendation(recommendation);
 
                 _responseDTO.Result = _mapper.Map<RecommendationDTO>(recommendation);
             }

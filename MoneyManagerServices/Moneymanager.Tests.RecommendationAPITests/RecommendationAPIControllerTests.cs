@@ -1,6 +1,6 @@
 namespace Moneymanager.Tests.RecommendationAPITests
 {
-    public class UnitTest1
+    public class RecommendationAPIControllerTests
     {
         [Fact]
         public void Test1()

@@ -1,6 +1,6 @@
 namespace Moneymanager.Tests.TransactoinAPITests
 {
-    public class UnitTest1
+    public class TransactionAPIControllerTests
     {
         [Fact]
         public void Test1()

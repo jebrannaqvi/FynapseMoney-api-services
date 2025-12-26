@@ -1,6 +1,6 @@
 namespace Moneymanager.Tests.BudgetAPITests
 {
-    public class UnitTest1
+    public class BudgetAPIControllerTests
     {
         [Fact]
         public void Test1()
